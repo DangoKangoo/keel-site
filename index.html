@@ -6,7 +6,7 @@
     <title>Keel: run and lift, one plan</title>
     <meta
       name="description"
-      content="Running plans made for your race, with strength training built in. Join the waitlist."
+      content="Marathon plans made for your race, with strength training built in. Join the waitlist."
     />
     <meta property="og:title" content="Keel: run and lift, one plan" />
     <meta
@@ -35,6 +35,7 @@
         --card: #ffffff;
         --primary: #c2410c;
         --primary-foreground: #ffffff;
+        --accent-text: #ab3a0a;
         --glow: rgb(194 65 12 / 0.16);
         --muted: #526379;
         --border: #dbe2ec;
@@ -56,6 +57,7 @@
           --card: #122133;
           --primary: #ff7a1a;
           --primary-foreground: #0b1622;
+          --accent-text: #ff7a1a;
           --glow: rgb(255 122 26 / 0.16);
           --muted: #96a8bd;
           --border: #20344c;
@@ -116,7 +118,7 @@
       }
       .eyebrow {
         margin: 0 0 0.875rem;
-        color: var(--primary);
+        color: var(--accent-text);
         font-size: 0.8125rem;
         font-weight: 700;
         letter-spacing: 0.1em;
@@ -226,6 +228,10 @@
       }
       .field.invalid {
         border-color: var(--error);
+      }
+      .field:focus-within {
+        outline: 2px solid var(--primary);
+        outline-offset: 1px;
       }
       .field input {
         flex: 1;
@@ -402,7 +408,7 @@
         font-weight: 800;
         letter-spacing: 0.08em;
         text-transform: uppercase;
-        color: var(--primary);
+        color: var(--accent-text);
       }
       .race::before {
         content: "";
@@ -637,11 +643,13 @@
             <p class="eyebrow rise">In development</p>
             <h1 class="display rise" style="--i: 1">Run and lift. <em>One plan.</em></h1>
             <p class="lead rise" style="--i: 2">
-              Running plans made for your race and your goal time, with strength training built in,
+              Marathon plans made for your race and your goal time, with strength training built in,
               around the week you actually have.
             </p>
-            <div class="rise" style="--i: 3" data-signup="hero"></div>
-            <p class="connects rise" style="--i: 4">Works with your Garmin watch and Hevy.</p>
+            <div class="rise" style="--i: 3" data-signup="hero">
+              <noscript><p class="problem">Turn on JavaScript to join the waitlist.</p></noscript>
+            </div>
+            <p class="connects rise" style="--i: 4">Built for Garmin watches and Hevy (Hevy Pro needed).</p>
           </div>
           <div class="phones rise" style="--i: 2">
             <div class="phone back" aria-hidden="true">
@@ -667,10 +675,10 @@
 
       <section class="story">
         <div class="wrap">
-          <p class="eyebrow reveal">Made for your race</p>
+          <p class="eyebrow reveal">Made for your marathon</p>
           <h2 class="display section-title reveal">Ready when it counts.</h2>
           <p class="lead reveal">
-            A plan shaped around your race and your goal, with strength work that fits alongside it.
+            A plan shaped around your marathon and your goal, with strength work that fits alongside it.
             Every week takes you closer, and you reach the start line fresh.
           </p>
           <div class="chart reveal" id="chart">
@@ -765,7 +773,7 @@
 
       <section class="wrap sources" aria-label="Where your data comes from">
         <div class="reveal"><b>Garmin Connect</b><span>Your runs, heart rate and sleep, already there.</span></div>
-        <div class="reveal"><b>Hevy</b><span>Your lifts, sets and weights, nothing to re-enter.</span></div>
+        <div class="reveal"><b>Hevy</b><span>Your lifts, sets and weights, with Hevy Pro.</span></div>
         <div class="reveal"><b>Keel</b><span>One plan that brings it all together.</span></div>
       </section>
 
@@ -773,7 +781,9 @@
         <div class="wrap">
           <h2 class="display reveal">Be first in.</h2>
           <p class="lead reveal">Leave your email and hear when Keel launches.</p>
-          <div class="reveal" data-signup="final"></div>
+          <div class="reveal" data-signup="final">
+            <noscript><p class="problem">Turn on JavaScript to join the waitlist.</p></noscript>
+          </div>
         </div>
       </section>
     </main>
@@ -808,7 +818,11 @@
             <span>I accept: email me about Keel's launch.</span>
           </label>
           <p class="problem" role="alert" hidden></p>
-          <p class="note">Launch news only. We never sell your email.</p>
+          <p class="note">
+            From William O'Driscoll,
+            <a href="mailto:willod1709@gmail.com">willod1709@gmail.com</a>. Launch news only. We never
+            sell your email, and you can unsubscribe at any time.
+          </p>
         </form>
         <div class="joined" role="status" tabindex="-1" hidden>
           <svg viewBox="0 0 40 40" aria-hidden="true">
@@ -858,18 +872,23 @@
         const consent = slot.querySelector('input[name="consent"]')
         const button = slot.querySelector("button")
         const problem = slot.querySelector(".problem")
+        problem.id = `${slot.dataset.signup}-problem`
+        email.setAttribute("aria-describedby", problem.id)
+        consent.setAttribute("aria-describedby", problem.id)
 
         function fail(message, target) {
-          problem.textContent = message
-          problem.hidden = false
           field.classList.toggle("invalid", target === email)
+          email.setAttribute("aria-invalid", String(target === email))
           target?.focus()
+          problem.hidden = false
+          problem.textContent = message
         }
 
         form.addEventListener("submit", async (event) => {
           event.preventDefault()
           problem.hidden = true
           field.classList.remove("invalid")
+          email.removeAttribute("aria-invalid")
           email.value = email.value.trim()
           if (!EMAIL.test(email.value)) return fail("Enter a valid email address.", email)
           if (!consent.checked) return fail("Tick the box so we can email you.", consent)
