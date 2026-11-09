@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Keel: running and strength training, planned together</title>
+    <meta
+      name="description"
+      content="Keel plans running and strength training as one programme, from today to race day. Join the waitlist."
+    />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --background: #f3f5f9;
+        --foreground: #0e1b2b;
+        --card: #ffffff;
+        --primary: #c2410c;
+        --primary-foreground: #ffffff;
+        --muted: #526379;
+        --border: #dbe2ec;
+        --error: #b42318;
+        --radius: 1rem;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --background: #0b1622;
+          --foreground: #e8eef5;
+          --card: #122133;
+          --primary: #ff7a1a;
+          --primary-foreground: #0b1622;
+          --muted: #96a8bd;
+          --border: #20344c;
+          --error: #ff8a7a;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        background: var(--background);
+        color: var(--foreground);
+        font-family: Archivo, system-ui, sans-serif;
+        line-height: 1.5;
+      }
+      main {
+        width: 100%;
+        max-width: 34rem;
+        margin: auto;
+        padding: 3rem 1.25rem 2rem;
+      }
+      .logo {
+        display: block;
+        width: 10rem;
+        height: auto;
+        margin-bottom: 2.5rem;
+      }
+      h1 {
+        margin: 0 0 1rem;
+        font-size: clamp(2.25rem, 8vw, 3.25rem);
+        line-height: 1.05;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+      }
+      .lead {
+        margin: 0 0 1.75rem;
+        font-size: 1.125rem;
+        color: var(--muted);
+      }
+      ul {
+        margin: 0 0 2.25rem;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 0.75rem;
+      }
+      li {
+        padding-left: 1.25rem;
+        position: relative;
+      }
+      li::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0.55em;
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 2px;
+        background: var(--primary);
+      }
+      form,
+      .thanks {
+        padding: 1.25rem;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+      }
+      h2 {
+        margin: 0 0 0.75rem;
+        font-size: 1.25rem;
+        font-weight: 800;
+      }
+      label.email {
+        display: block;
+        margin-bottom: 0.375rem;
+        font-weight: 600;
+      }
+      input[type="email"] {
+        width: 100%;
+        height: 3rem;
+        padding: 0 0.875rem;
+        font: inherit;
+        color: var(--foreground);
+        background: var(--background);
+        border: 1px solid var(--border);
+        border-radius: 0.75rem;
+      }
+      .accept {
+        display: flex;
+        gap: 0.625rem;
+        align-items: flex-start;
+        margin: 0.875rem 0 1rem;
+      }
+      .accept input {
+        width: 1.25rem;
+        height: 1.25rem;
+        margin: 0.125rem 0 0;
+        flex: none;
+        accent-color: var(--primary);
+      }
+      button {
+        width: 100%;
+        height: 3rem;
+        font: inherit;
+        font-weight: 800;
+        color: var(--primary-foreground);
+        background: var(--primary);
+        border: 0;
+        border-radius: 0.75rem;
+        cursor: pointer;
+      }
+      button:disabled {
+        opacity: 0.6;
+        cursor: progress;
+      }
+      input:focus-visible,
+      button:focus-visible {
+        outline: 2px solid var(--primary);
+        outline-offset: 2px;
+      }
+      .trap {
+        position: absolute;
+        left: -9999px;
+      }
+      .error {
+        margin: 0.75rem 0 0;
+        color: var(--error);
+        font-weight: 600;
+      }
+      .privacy,
+      footer {
+        font-size: 0.875rem;
+        color: var(--muted);
+      }
+      .privacy {
+        margin: 0.875rem 0 0;
+      }
+      .thanks p {
+        margin: 0;
+      }
+      footer {
+        padding: 0 1.25rem 2rem;
+        text-align: center;
+      }
+      footer a {
+        color: inherit;
+      }
+      [hidden] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="assets/keel-logo-on-dark.svg" />
+        <img class="logo" src="assets/keel-logo-on-light.svg" alt="Keel" width="160" height="40" />
+      </picture>
+
+      <h1>Running and strength training, planned together.</h1>
+      <p class="lead">One structured programme from today to race day, built around your week.</p>
+
+      <ul>
+        <li>Runs and lifts planned as one, so hard days never collide.</li>
+        <li>Built back from your race, with recovery weeks and a proper taper.</li>
+        <li>Reads your training from Garmin Connect and Hevy, and shows how it is going.</li>
+      </ul>
+
+      <form id="waitlist" novalidate>
+        <h2>Join the waitlist</h2>
+        <label class="email" for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="email" required />
+
+        <div class="trap" aria-hidden="true">
+          <label>Website <input name="website" tabindex="-1" autocomplete="off" /></label>
+        </div>
+
+        <label class="accept">
+          <input id="consent" name="consent" type="checkbox" value="yes" required />
+          <span>I accept: email me about Keel's launch.</span>
+        </label>
+
+        <button id="submit" type="submit">Join the waitlist</button>
+        <p id="error" class="error" role="alert" hidden></p>
+        <p class="privacy">
+          Keel is in development. We only use your email for launch news and never sell it. It is
+          kept in a private Google Sheet.
+        </p>
+      </form>
+
+      <div id="thanks" class="thanks" role="status" hidden>
+        <h2>You're on the list</h2>
+        <p>We'll email you when Keel launches.</p>
+      </div>
+    </main>
+
+    <footer>
+      <a href="https://github.com/DangoKangoo/keel">Keel on GitHub</a>
+    </footer>
+
+    <script>
+      const WAITLIST_URL =
+        "https://script.google.com/macros/s/AKfycbxrgDB7WCNCM-3z-Li0LCewTi_49i-_UP2z1ZlbtQkMJ30cITLgVvGtt20gWEw4nuJ0/exec"
+      const EMAIL = /^[a-z0-9][^\s@]*@[^\s@]+\.[^\s@]+$/i
+
+      const form = document.getElementById("waitlist")
+      const email = document.getElementById("email")
+      const consent = document.getElementById("consent")
+      const button = document.getElementById("submit")
+      const error = document.getElementById("error")
+
+      function showError(message) {
+        error.textContent = message
+        error.hidden = false
+      }
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault()
+        error.hidden = true
+        email.value = email.value.trim()
+        if (!EMAIL.test(email.value)) return showError("Enter a valid email address.")
+        if (!consent.checked) return showError("Tick the box so we can email you.")
+
+        button.disabled = true
+        button.textContent = "Joining..."
+        try {
+          const response = await fetch(WAITLIST_URL, { method: "POST", body: new URLSearchParams(new FormData(form)) })
+          const result = await response.json()
+          if (!result.ok) throw new Error(result.error)
+          form.hidden = true
+          document.getElementById("thanks").hidden = false
+        } catch {
+          showError("That didn't go through, and your email was not saved. Please try again.")
+          button.disabled = false
+          button.textContent = "Join the waitlist"
+        }
+      })
+    </script>
+  </body>
+</html>
