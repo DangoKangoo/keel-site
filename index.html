@@ -3,144 +3,250 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Keel: running and strength training, planned together</title>
+    <title>Keel: run and lift, one plan</title>
     <meta
       name="description"
       content="Keel plans running and strength training as one programme, from today to race day. Join the waitlist."
     />
+    <meta property="og:title" content="Keel: run and lift, one plan" />
+    <meta
+      property="og:description"
+      content="Running and strength training, planned together. Join the waitlist."
+    />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1622" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f3f5f9" />
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap"
       rel="stylesheet"
     />
+    <script>
+      document.documentElement.classList.add("js")
+    </script>
     <style>
       :root {
+        color-scheme: light dark;
         --background: #f3f5f9;
+        --background-deep: #e7ecf3;
         --foreground: #0e1b2b;
         --card: #ffffff;
         --primary: #c2410c;
         --primary-foreground: #ffffff;
+        --glow: rgb(194 65 12 / 0.16);
         --muted: #526379;
         --border: #dbe2ec;
+        --run: #1d5fd6;
+        --block: #b9c6d6;
+        --bezel: #0e1b2b;
         --error: #b42318;
+        --success: #15803d;
+        --shadow: 0 2rem 4rem -1.5rem rgb(14 27 43 / 0.35);
         --radius: 1rem;
+        --gutter: clamp(1.25rem, 4vw, 2.5rem);
+        --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
       }
       @media (prefers-color-scheme: dark) {
         :root {
           --background: #0b1622;
+          --background-deep: #081019;
           --foreground: #e8eef5;
           --card: #122133;
           --primary: #ff7a1a;
           --primary-foreground: #0b1622;
+          --glow: rgb(255 122 26 / 0.16);
           --muted: #96a8bd;
           --border: #20344c;
+          --run: #5b9bff;
+          --block: #2c435f;
+          --bezel: #020609;
           --error: #ff8a7a;
+          --success: #4ade80;
+          --shadow: 0 2rem 4rem -1.5rem rgb(0 0 0 / 0.75);
         }
       }
+
       * {
         box-sizing: border-box;
       }
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 5rem;
+        -webkit-text-size-adjust: 100%;
+      }
       body {
         margin: 0;
-        min-height: 100dvh;
-        display: flex;
-        flex-direction: column;
         background: var(--background);
         color: var(--foreground);
         font-family: Archivo, system-ui, sans-serif;
-        line-height: 1.5;
+        line-height: 1.55;
+        overflow-x: clip;
       }
-      main {
-        width: 100%;
-        max-width: 34rem;
-        margin: auto;
-        padding: 3rem 1.25rem 2rem;
-      }
-      .logo {
+      img {
         display: block;
-        width: 10rem;
+        max-width: 100%;
         height: auto;
-        margin-bottom: 2.5rem;
       }
-      h1 {
-        margin: 0 0 1rem;
-        font-size: clamp(2.25rem, 8vw, 3.25rem);
-        line-height: 1.05;
+      a {
+        color: inherit;
+      }
+      :focus-visible {
+        outline: 2px solid var(--primary);
+        outline-offset: 3px;
+      }
+      [hidden] {
+        display: none !important;
+      }
+
+      .wrap {
+        width: 100%;
+        max-width: 72rem;
+        margin-inline: auto;
+        padding-inline: var(--gutter);
+      }
+      .display {
+        margin: 0;
+        font-stretch: 72%;
         font-weight: 800;
-        letter-spacing: -0.02em;
+        line-height: 0.92;
+        letter-spacing: -0.01em;
+        text-transform: uppercase;
       }
-      .lead {
-        margin: 0 0 1.75rem;
-        font-size: 1.125rem;
+      .eyebrow {
+        margin: 0 0 0.875rem;
+        color: var(--primary);
+        font-size: 0.8125rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .muted {
         color: var(--muted);
       }
-      ul {
-        margin: 0 0 2.25rem;
-        padding: 0;
-        list-style: none;
-        display: grid;
-        gap: 0.75rem;
+
+      /* Top bar */
+      .bar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        border-bottom: 1px solid transparent;
+        transition:
+          background 0.25s,
+          border-color 0.25s;
       }
-      li {
-        padding-left: 1.25rem;
+      .bar.stuck {
+        background: color-mix(in srgb, var(--background) 86%, transparent);
+        border-bottom-color: var(--border);
+        backdrop-filter: blur(14px);
+      }
+      .bar .wrap {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 4.25rem;
+      }
+      .logo {
+        width: 6.75rem;
+      }
+      .bar-join {
+        height: 2.5rem;
+        padding: 0 1.125rem;
+        font: inherit;
+        font-size: 0.9375rem;
+        font-weight: 700;
+        color: var(--foreground);
+        background: transparent;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        cursor: pointer;
+        transition: border-color 0.2s;
+      }
+      .bar-join:hover {
+        border-color: var(--primary);
+      }
+
+      /* Hero */
+      .hero {
         position: relative;
+        padding-block: clamp(2rem, 5vw, 4.5rem) clamp(3.5rem, 8vw, 6.5rem);
       }
-      li::before {
+      .hero::before {
         content: "";
         position: absolute;
-        left: 0;
-        top: 0.55em;
-        width: 0.5rem;
-        height: 0.5rem;
-        border-radius: 2px;
-        background: var(--primary);
+        z-index: -1;
+        top: -14rem;
+        right: -8rem;
+        width: min(52rem, 110vw);
+        aspect-ratio: 1;
+        background: radial-gradient(closest-side, var(--glow), transparent);
       }
-      form,
-      .thanks {
-        padding: 1.25rem;
+      .hero .wrap {
+        display: grid;
+        gap: clamp(2.5rem, 5vw, 4rem);
+        align-items: center;
+      }
+      .hero h1 {
+        font-size: clamp(4.25rem, 16.5vw, 8.5rem);
+      }
+      .hero h1 em {
+        display: block;
+        font-style: normal;
+        color: var(--primary);
+      }
+      .lead {
+        max-width: 31rem;
+        margin: 1.25rem 0 1.75rem;
+        font-size: clamp(1.125rem, 2.2vw, 1.3125rem);
+        color: var(--muted);
+      }
+      .connects {
+        margin: 1rem 0 0;
+        font-size: 0.9375rem;
+        color: var(--muted);
+      }
+
+      /* Sign-up */
+      .join {
+        max-width: 31rem;
+      }
+      .field {
+        display: flex;
+        gap: 0.375rem;
+        padding: 0.375rem;
         background: var(--card);
         border: 1px solid var(--border);
-        border-radius: var(--radius);
+        border-radius: 1.0625rem;
+        box-shadow: var(--shadow);
+        transition: border-color 0.2s;
       }
-      h2 {
-        margin: 0 0 0.75rem;
-        font-size: 1.25rem;
-        font-weight: 800;
+      .field:focus-within {
+        border-color: var(--primary);
       }
-      label.email {
-        display: block;
-        margin-bottom: 0.375rem;
-        font-weight: 600;
+      .field.invalid {
+        border-color: var(--error);
       }
-      input[type="email"] {
-        width: 100%;
-        height: 3rem;
+      .field input {
+        flex: 1;
+        min-width: 0;
+        height: 3.25rem;
         padding: 0 0.875rem;
         font: inherit;
+        font-size: 1.0625rem;
         color: var(--foreground);
-        background: var(--background);
-        border: 1px solid var(--border);
-        border-radius: 0.75rem;
+        background: transparent;
+        border: 0;
+        outline: 0;
       }
-      .accept {
-        display: flex;
-        gap: 0.625rem;
-        align-items: flex-start;
-        margin: 0.875rem 0 1rem;
+      .field input::placeholder {
+        color: var(--muted);
       }
-      .accept input {
-        width: 1.25rem;
-        height: 1.25rem;
-        margin: 0.125rem 0 0;
+      .field button {
         flex: none;
-        accent-color: var(--primary);
-      }
-      button {
-        width: 100%;
-        height: 3rem;
+        min-width: 6.5rem;
+        height: 3.25rem;
+        padding: 0 1.375rem;
         font: inherit;
         font-weight: 800;
         color: var(--primary-foreground);
@@ -148,133 +254,694 @@
         border: 0;
         border-radius: 0.75rem;
         cursor: pointer;
+        transition:
+          transform 0.15s,
+          filter 0.15s;
       }
-      button:disabled {
-        opacity: 0.6;
+      .field button:hover {
+        filter: brightness(1.08);
+      }
+      .field button:active {
+        transform: scale(0.97);
+      }
+      .field button:disabled {
+        opacity: 0.65;
         cursor: progress;
       }
-      input:focus-visible,
-      button:focus-visible {
-        outline: 2px solid var(--primary);
-        outline-offset: 2px;
+      .accept {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        min-height: 2.75rem;
+        margin-top: 0.25rem;
+        font-size: 0.9375rem;
+        cursor: pointer;
+      }
+      .accept input {
+        flex: none;
+        width: 1.125rem;
+        height: 1.125rem;
+        margin: 0;
+        accent-color: var(--primary);
       }
       .trap {
         position: absolute;
         left: -9999px;
       }
-      .error {
-        margin: 0.75rem 0 0;
+      .problem {
+        margin: 0.125rem 0 0;
         color: var(--error);
+        font-size: 0.9375rem;
         font-weight: 600;
       }
-      .privacy,
-      footer {
+      .note {
+        margin: 0.125rem 0 0;
+        font-size: 0.8125rem;
+        color: var(--muted);
+      }
+      .joined {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1.125rem 1.25rem;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 1.0625rem;
+        box-shadow: var(--shadow);
+      }
+      .joined strong {
+        display: block;
+        font-size: 1.125rem;
+        font-weight: 800;
+      }
+      .joined span {
+        font-size: 0.9375rem;
+        color: var(--muted);
+      }
+      .joined svg {
+        flex: none;
+        width: 2.5rem;
+        height: 2.5rem;
+      }
+      .joined rect {
+        fill: var(--block);
+      }
+      .joined rect.top {
+        fill: var(--primary);
+      }
+
+      /* Phones */
+      .phone {
+        padding: 0.4375rem;
+        background: var(--bezel);
+        border: 1px solid var(--border);
+        border-radius: 2.5rem;
+        box-shadow: var(--shadow);
+      }
+      .phone img {
+        width: 100%;
+        border-radius: 2.0625rem;
+      }
+      .phones {
+        position: relative;
+        width: min(21rem, 78vw);
+        margin-inline: auto;
+      }
+      .phones .front {
+        position: relative;
+        z-index: 1;
+      }
+      .phones .back {
+        position: absolute;
+        top: 3.25rem;
+        left: 54%;
+        width: 86%;
+        opacity: 0.92;
+        rotate: 5deg;
+      }
+
+      /* Plan graphic */
+      .story {
+        padding-block: clamp(3.5rem, 8vw, 6.5rem);
+        background: var(--background-deep);
+        border-block: 1px solid var(--border);
+      }
+      .section-title {
+        font-size: clamp(2.75rem, 8.5vw, 5rem);
+      }
+      .story p.lead {
+        max-width: 38rem;
+        margin-bottom: 2.75rem;
+      }
+      .chart {
+        position: relative;
+        padding-top: 2rem;
+      }
+      .bars {
+        display: grid;
+        grid-template-columns: repeat(26, 1fr);
+        align-items: end;
+        gap: clamp(2px, 0.55vw, 7px);
+        height: clamp(11rem, 30vw, 19rem);
+      }
+      .bars i {
+        display: block;
+        height: var(--h);
+        background: var(--c, var(--block));
+        border-radius: 3px 3px 1px 1px;
+        transform-origin: bottom;
+      }
+      .race {
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.8125rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--primary);
+      }
+      .race::before {
+        content: "";
+        width: 0.625rem;
+        height: 0.625rem;
+        background: var(--primary);
+        border-radius: 2px;
+      }
+      .phases {
+        display: grid;
+        grid-template-columns: 8fr 8fr 7fr 3fr;
+        gap: clamp(2px, 0.55vw, 7px);
+        margin-top: 0.75rem;
+      }
+      .phases div {
+        padding-top: 0.5rem;
+        border-top: 3px solid var(--c);
+        min-width: 0;
+      }
+      .phases b {
+        display: block;
+        font-size: clamp(0.8125rem, 1.8vw, 1rem);
+        font-weight: 800;
+      }
+      .phases span {
+        display: none;
         font-size: 0.875rem;
         color: var(--muted);
       }
-      .privacy {
-        margin: 0.875rem 0 0;
+      .illustrative {
+        margin: 1.25rem 0 0;
+        font-size: 0.8125rem;
+        color: var(--muted);
       }
-      .thanks p {
-        margin: 0;
+
+      /* Features */
+      .features {
+        display: grid;
+        gap: clamp(4rem, 9vw, 7.5rem);
+        padding-block: clamp(4rem, 9vw, 7.5rem);
       }
-      footer {
-        padding: 0 1.25rem 2rem;
+      .feature {
+        display: grid;
+        gap: 2.5rem;
+        align-items: center;
+      }
+      .feature .phone {
+        width: min(19rem, 72vw);
+        margin-inline: auto;
+      }
+      .feature h3 {
+        font-size: clamp(2.5rem, 6.5vw, 4rem);
+      }
+      .feature p {
+        max-width: 29rem;
+        margin: 1rem 0 0;
+        font-size: 1.125rem;
+        color: var(--muted);
+      }
+
+      /* Sources */
+      .sources {
+        display: grid;
+        gap: 0.75rem;
+        padding-bottom: clamp(4rem, 9vw, 7.5rem);
+      }
+      .sources div {
+        padding: 1.5rem;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+      }
+      .sources b {
+        display: block;
+        margin-bottom: 0.25rem;
+        font-size: 1.125rem;
+        font-weight: 800;
+      }
+      .sources span {
+        color: var(--muted);
+      }
+
+      /* Final call */
+      .final {
+        padding-block: clamp(4rem, 10vw, 8rem);
+        background: var(--background-deep);
+        border-top: 1px solid var(--border);
         text-align: center;
       }
-      footer a {
-        color: inherit;
+      .final h2 {
+        font-size: clamp(3.25rem, 11vw, 6.5rem);
       }
-      [hidden] {
-        display: none !important;
+      .final .lead {
+        margin-inline: auto;
+      }
+      .final .join {
+        margin-inline: auto;
+        text-align: left;
+      }
+      footer {
+        padding-block: 1.75rem 2.5rem;
+        font-size: 0.875rem;
+        color: var(--muted);
+      }
+      footer .wrap {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 0.5rem 2rem;
+      }
+
+      @media (min-width: 40rem) {
+        .sources {
+          grid-template-columns: repeat(3, 1fr);
+        }
+        .phases span {
+          display: block;
+        }
+      }
+      @media (min-width: 58rem) {
+        .hero .wrap {
+          grid-template-columns: 1.35fr 1fr;
+        }
+        .hero h1 {
+          font-size: clamp(4.25rem, 7vw, 6rem);
+          font-stretch: 66%;
+        }
+        .phones {
+          margin-left: 0;
+          width: min(20rem, 26vw);
+        }
+        .feature {
+          grid-template-columns: 1fr 1fr;
+          gap: 4rem;
+        }
+        .feature:nth-child(even) .phone {
+          order: -1;
+        }
+      }
+      @media (max-width: 57.99rem) {
+        .phones .back {
+          left: 46%;
+        }
+        .phones {
+          margin-right: 28%;
+          margin-left: auto;
+        }
+      }
+      @media (max-width: 26rem) {
+        .field button {
+          min-width: 0;
+          padding-inline: 1.125rem;
+        }
+      }
+
+      @media (prefers-reduced-motion: no-preference) {
+        .js .rise {
+          animation: rise 0.8s var(--ease) both;
+          animation-delay: calc(var(--i, 0) * 90ms);
+        }
+        .js .phones .back {
+          animation: slide-out 1s var(--ease) 0.25s both;
+        }
+        .js .reveal {
+          opacity: 0;
+          translate: 0 1.75rem;
+          transition:
+            opacity 0.7s var(--ease),
+            translate 0.7s var(--ease);
+        }
+        .js .reveal.in {
+          opacity: 1;
+          translate: 0 0;
+        }
+        .js .bars i {
+          transform: scaleY(0);
+          transition: transform 0.7s var(--ease);
+          transition-delay: calc(var(--n) * 28ms);
+        }
+        .js .chart.in .bars i {
+          transform: scaleY(1);
+        }
+        .joined rect {
+          animation: pop 0.45s var(--ease) both;
+          animation-delay: calc(var(--n) * 90ms);
+          transform-origin: bottom;
+          transform-box: fill-box;
+        }
+        @keyframes rise {
+          from {
+            opacity: 0;
+            translate: 0 1.5rem;
+          }
+        }
+        @keyframes slide-out {
+          from {
+            opacity: 0;
+            translate: -22% 0;
+            rotate: 0deg;
+          }
+        }
+        @keyframes pop {
+          from {
+            transform: scaleY(0);
+          }
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
       }
     </style>
   </head>
   <body>
-    <main>
-      <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="assets/keel-logo-on-dark.svg" />
-        <img class="logo" src="assets/keel-logo-on-light.svg" alt="Keel" width="160" height="40" />
-      </picture>
-
-      <h1>Running and strength training, planned together.</h1>
-      <p class="lead">One structured programme from today to race day, built around your week.</p>
-
-      <ul>
-        <li>Runs and lifts planned as one, so hard days never collide.</li>
-        <li>Built back from your race, with recovery weeks and a proper taper.</li>
-        <li>Reads your training from Garmin Connect and Hevy, and shows how it is going.</li>
-      </ul>
-
-      <form id="waitlist" novalidate>
-        <h2>Join the waitlist</h2>
-        <label class="email" for="email">Email</label>
-        <input id="email" name="email" type="email" autocomplete="email" required />
-
-        <div class="trap" aria-hidden="true">
-          <label>Website <input name="website" tabindex="-1" autocomplete="off" /></label>
-        </div>
-
-        <label class="accept">
-          <input id="consent" name="consent" type="checkbox" value="yes" required />
-          <span>I accept: email me about Keel's launch.</span>
-        </label>
-
-        <button id="submit" type="submit">Join the waitlist</button>
-        <p id="error" class="error" role="alert" hidden></p>
-        <p class="privacy">
-          Keel is in development. We only use your email for launch news and never sell it. It is
-          kept in a private Google Sheet.
-        </p>
-      </form>
-
-      <div id="thanks" class="thanks" role="status" hidden>
-        <h2>You're on the list</h2>
-        <p>We'll email you when Keel launches.</p>
+    <header class="bar" id="bar">
+      <div class="wrap">
+        <a href="#top" aria-label="Keel home">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="assets/keel-logo-on-dark.svg" />
+            <img class="logo" src="assets/keel-logo-on-light.svg" alt="Keel" width="108" height="28" />
+          </picture>
+        </a>
+        <button class="bar-join" id="bar-join" type="button">Join the waitlist</button>
       </div>
+    </header>
+
+    <main id="top">
+      <section class="hero" id="hero">
+        <div class="wrap">
+          <div>
+            <p class="eyebrow rise">In development</p>
+            <h1 class="display rise" style="--i: 1">Run and lift. <em>One plan.</em></h1>
+            <p class="lead rise" style="--i: 2">
+              Keel builds your running and strength training as one programme, from today to race
+              day, around the week you actually have.
+            </p>
+            <div class="rise" style="--i: 3" data-signup="hero"></div>
+            <p class="connects rise" style="--i: 4">Works with your Garmin watch and Hevy.</p>
+          </div>
+          <div class="phones rise" style="--i: 2">
+            <div class="phone back" aria-hidden="true">
+              <picture>
+                <source media="(prefers-color-scheme: dark)" srcset="assets/screens/plan-dark.png" />
+                <img src="assets/screens/plan-light.png" alt="" width="780" height="1688" />
+              </picture>
+            </div>
+            <div class="phone front">
+              <picture>
+                <source media="(prefers-color-scheme: dark)" srcset="assets/screens/today-dark.png" />
+                <img
+                  src="assets/screens/today-light.png"
+                  alt="Keel's Today screen: a race countdown, sleep and resting heart rate, and a suggestion to make today's intervals an easy run after a short night."
+                  width="780"
+                  height="1688"
+                />
+              </picture>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="story">
+        <div class="wrap">
+          <p class="eyebrow reveal">Built back from race day</p>
+          <h2 class="display section-title reveal">Every week earns the next.</h2>
+          <p class="lead reveal">
+            Distance grows a little at a time, with a recovery week every fourth week, then tapers so
+            you arrive fresh. Your lifts are placed around it.
+          </p>
+          <div class="chart reveal" id="chart">
+            <span class="race">Race day</span>
+            <div
+              class="bars"
+              id="bars"
+              role="img"
+              aria-label="Weekly running volume over 26 weeks, rising through base, build and peak phases with a lighter week every fourth week, then falling through the taper to race day."
+            ></div>
+            <div class="phases">
+              <div style="--c: var(--block)"><b>Base</b><span>Easy volume and strength</span></div>
+              <div style="--c: var(--run)"><b>Build</b><span>Tempo and intervals</span></div>
+              <div style="--c: var(--primary)"><b>Peak</b><span>Race-specific long runs</span></div>
+              <div style="--c: var(--muted)"><b>Taper</b></div>
+            </div>
+          </div>
+          <p class="illustrative">Illustration of a 26-week plan.</p>
+        </div>
+      </section>
+
+      <section class="wrap features" aria-label="What Keel does">
+        <article class="feature reveal">
+          <div>
+            <p class="eyebrow">It adapts</p>
+            <h3 class="display">When the week goes sideways.</h3>
+            <p>
+              Missed a run or slept badly? Keel suggests the change and you decide. Apply it or
+              dismiss it. Nothing moves without you.
+            </p>
+          </div>
+          <div class="phone">
+            <picture>
+              <source media="(prefers-color-scheme: dark)" srcset="assets/screens/plan-dark.png" />
+              <img
+                src="assets/screens/plan-light.png"
+                alt="Keel's plan screen: phases, this week's sessions marked done or missed, and a suggested change."
+                width="780"
+                height="1688"
+                loading="lazy"
+              />
+            </picture>
+          </div>
+        </article>
+
+        <article class="feature reveal">
+          <div>
+            <p class="eyebrow">One session, all of it</p>
+            <h3 class="display">Your sets and your heart rate.</h3>
+            <p>
+              Log your lift in Hevy and wear your watch. Keel merges them into one workout, so every
+              set sits next to the effort it took.
+            </p>
+          </div>
+          <div class="phone">
+            <picture>
+              <source media="(prefers-color-scheme: dark)" srcset="assets/screens/session-dark.png" />
+              <img
+                src="assets/screens/session-light.png"
+                alt="Keel's session screen: an upper body workout with duration, volume, heart rate, calories and each exercise."
+                width="780"
+                height="1688"
+                loading="lazy"
+              />
+            </picture>
+          </div>
+        </article>
+
+        <article class="feature reveal">
+          <div>
+            <p class="eyebrow">Progress</p>
+            <h3 class="display">Running and lifting, on one page.</h3>
+            <p>
+              Weekly distance, longest run, lifting sessions and volume, side by side, so you can see
+              what the work is adding up to.
+            </p>
+          </div>
+          <div class="phone">
+            <picture>
+              <source media="(prefers-color-scheme: dark)" srcset="assets/screens/progress-dark.png" />
+              <img
+                src="assets/screens/progress-light.png"
+                alt="Keel's progress screen: weekly running distance and lifting volume over recent months."
+                width="780"
+                height="1688"
+                loading="lazy"
+              />
+            </picture>
+          </div>
+        </article>
+      </section>
+
+      <section class="wrap sources" aria-label="Where your data comes from">
+        <div class="reveal"><b>Garmin Connect</b><span>Runs, heart rate, sleep and recovery.</span></div>
+        <div class="reveal"><b>Hevy</b><span>Lifting sessions, sets and weights.</span></div>
+        <div class="reveal"><b>Keel</b><span>Plans it, and shows how it is going.</span></div>
+      </section>
+
+      <section class="final">
+        <div class="wrap">
+          <h2 class="display reveal">Be first in.</h2>
+          <p class="lead reveal">Leave your email and hear when Keel launches.</p>
+          <div class="reveal" data-signup="final"></div>
+        </div>
+      </section>
     </main>
 
     <footer>
-      <a href="https://github.com/DangoKangoo/keel">Keel on GitHub</a>
+      <div class="wrap">
+        <span>App screens show sample data from a made-up athlete.</span>
+        <a href="https://github.com/DangoKangoo/keel">Keel on GitHub</a>
+      </div>
     </footer>
+
+    <template id="signup">
+      <div class="join">
+        <form novalidate>
+          <div class="field">
+            <input
+              name="email"
+              type="email"
+              inputmode="email"
+              autocomplete="email"
+              placeholder="you@email.com"
+              aria-label="Email address"
+              required
+            />
+            <button type="submit">Join</button>
+          </div>
+          <div class="trap" aria-hidden="true">
+            <label>Website <input name="website" tabindex="-1" autocomplete="off" /></label>
+          </div>
+          <label class="accept">
+            <input name="consent" type="checkbox" value="yes" required />
+            <span>I accept: email me about Keel's launch.</span>
+          </label>
+          <p class="problem" role="alert" hidden></p>
+          <p class="note">Launch news only. We never sell your email. Kept in a private Google Sheet.</p>
+        </form>
+        <div class="joined" role="status" tabindex="-1" hidden>
+          <svg viewBox="0 0 40 40" aria-hidden="true">
+            <rect style="--n: 0" x="2" y="24" width="10" height="14" rx="2" />
+            <rect style="--n: 1" x="15" y="14" width="10" height="24" rx="2" />
+            <rect class="top" style="--n: 2" x="28" y="3" width="10" height="35" rx="2" />
+          </svg>
+          <div>
+            <strong>You're on the list.</strong>
+            <span>We'll email you when Keel launches.</span>
+          </div>
+        </div>
+      </div>
+    </template>
 
     <script>
       const WAITLIST_URL =
         "https://script.google.com/macros/s/AKfycbxrgDB7WCNCM-3z-Li0LCewTi_49i-_UP2z1ZlbtQkMJ30cITLgVvGtt20gWEw4nuJ0/exec"
       const EMAIL = /^[a-z0-9][^\s@]*@[^\s@]+\.[^\s@]+$/i
+      const FAILED = "That didn't go through, and your email was not saved. Please try again."
 
-      const form = document.getElementById("waitlist")
-      const email = document.getElementById("email")
-      const consent = document.getElementById("consent")
-      const button = document.getElementById("submit")
-      const error = document.getElementById("error")
+      // Illustrative weekly volume: 8 base, 8 build, 7 peak and 3 taper weeks.
+      const WEEKS = [34, 38, 42, 32, 44, 48, 52, 40, 54, 58, 62, 46, 64, 68, 72, 52, 76, 80, 86, 62, 90, 96, 100, 70, 50, 34]
+      const PHASES = [
+        { until: 8, colour: "var(--block)" },
+        { until: 16, colour: "var(--run)" },
+        { until: 23, colour: "var(--primary)" },
+        { until: 26, colour: "var(--muted)" },
+      ]
 
-      function showError(message) {
-        error.textContent = message
-        error.hidden = false
+      function drawBars() {
+        const bars = document.getElementById("bars")
+        WEEKS.forEach((height, week) => {
+          const bar = document.createElement("i")
+          bar.style.setProperty("--h", `${height}%`)
+          bar.style.setProperty("--n", week)
+          bar.style.setProperty("--c", PHASES.find((p) => week < p.until).colour)
+          bars.append(bar)
+        })
       }
 
-      form.addEventListener("submit", async (event) => {
-        event.preventDefault()
-        error.hidden = true
-        email.value = email.value.trim()
-        if (!EMAIL.test(email.value)) return showError("Enter a valid email address.")
-        if (!consent.checked) return showError("Tick the box so we can email you.")
+      function setUpSignup(slot, template) {
+        slot.append(template.content.cloneNode(true))
+        const form = slot.querySelector("form")
+        const field = slot.querySelector(".field")
+        const email = slot.querySelector('input[name="email"]')
+        const consent = slot.querySelector('input[name="consent"]')
+        const button = slot.querySelector("button")
+        const problem = slot.querySelector(".problem")
 
-        button.disabled = true
-        button.textContent = "Joining..."
-        try {
-          const response = await fetch(WAITLIST_URL, { method: "POST", body: new URLSearchParams(new FormData(form)) })
-          const result = await response.json()
-          if (!result.ok) throw new Error(result.error)
-          form.hidden = true
-          document.getElementById("thanks").hidden = false
-        } catch {
-          showError("That didn't go through, and your email was not saved. Please try again.")
-          button.disabled = false
-          button.textContent = "Join the waitlist"
+        function fail(message, target) {
+          problem.textContent = message
+          problem.hidden = false
+          field.classList.toggle("invalid", target === email)
+          target?.focus()
         }
-      })
+
+        form.addEventListener("submit", async (event) => {
+          event.preventDefault()
+          problem.hidden = true
+          field.classList.remove("invalid")
+          email.value = email.value.trim()
+          if (!EMAIL.test(email.value)) return fail("Enter a valid email address.", email)
+          if (!consent.checked) return fail("Tick the box so we can email you.", consent)
+
+          button.disabled = true
+          button.textContent = "Joining"
+          try {
+            const response = await fetch(WAITLIST_URL, {
+              method: "POST",
+              body: new URLSearchParams(new FormData(form)),
+            })
+            const result = await response.json()
+            if (!result.ok) throw new Error(result.error)
+            showJoined(slot)
+          } catch {
+            fail(FAILED)
+            button.disabled = false
+            button.textContent = "Join"
+          }
+        })
+      }
+
+      // Joining from either form confirms in both, so the page never asks twice.
+      function showJoined(submitted) {
+        document.querySelectorAll("[data-signup]").forEach((slot) => {
+          slot.querySelector("form").hidden = true
+          slot.querySelector(".joined").hidden = false
+        })
+        submitted.querySelector(".joined").focus({ preventScroll: true })
+        document.getElementById("bar-join").hidden = true
+      }
+
+      function setUpBar() {
+        const bar = document.getElementById("bar")
+        const hero = document.getElementById("hero")
+        const update = () => bar.classList.toggle("stuck", window.scrollY > 8)
+        addEventListener("scroll", update, { passive: true })
+        update()
+
+        document.getElementById("bar-join").addEventListener("click", () => {
+          const pastHero = hero.getBoundingClientRect().bottom < innerHeight / 3
+          const slot = document.querySelector(`[data-signup="${pastHero ? "final" : "hero"}"]`)
+          slot.scrollIntoView({ block: "center" })
+          slot.querySelector('input[name="email"]').focus({ preventScroll: true })
+        })
+      }
+
+      function revealOnScroll() {
+        const targets = document.querySelectorAll(".reveal")
+        if (!("IntersectionObserver" in window)) {
+          targets.forEach((target) => target.classList.add("in"))
+          return
+        }
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries
+              .filter((entry) => entry.isIntersecting)
+              .forEach((entry) => {
+                entry.target.classList.add("in")
+                observer.unobserve(entry.target)
+              })
+          },
+          { threshold: 0.12 },
+        )
+        targets.forEach((target) => observer.observe(target))
+      }
+
+      drawBars()
+      const template = document.getElementById("signup")
+      document.querySelectorAll("[data-signup]").forEach((slot) => setUpSignup(slot, template))
+      setUpBar()
+      revealOnScroll()
     </script>
   </body>
 </html>
