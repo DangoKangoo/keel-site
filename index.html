@@ -36,6 +36,7 @@
         --primary: #c2410c;
         --primary-foreground: #ffffff;
         --accent-text: #ab3a0a;
+        --logo-step: #b04808;
         --glow: rgb(194 65 12 / 0.16);
         --muted: #526379;
         --border: #dbe2ec;
@@ -58,6 +59,7 @@
           --primary: #ff7a1a;
           --primary-foreground: #0b1622;
           --accent-text: #ff7a1a;
+          --logo-step: #ff7a1a;
           --glow: rgb(255 122 26 / 0.16);
           --muted: #96a8bd;
           --border: #20344c;
@@ -509,15 +511,28 @@
         text-align: left;
       }
       footer {
-        padding-block: 1.75rem 2.5rem;
+        padding-block: 1.75rem 0;
         font-size: 0.875rem;
         color: var(--muted);
       }
-      footer .wrap {
+      footer .links {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
         gap: 0.5rem 2rem;
+      }
+      /* The brand at full width under the links, as the page's last word. */
+      .signoff {
+        display: block;
+        width: 100%;
+        height: auto;
+        margin-block: clamp(2.5rem, 7vw, 5rem) var(--gutter);
+      }
+      .signoff .ink {
+        fill: var(--foreground);
+      }
+      .signoff .step {
+        fill: var(--logo-step);
       }
 
       @media (min-width: 40rem) {
@@ -790,8 +805,11 @@
 
     <footer>
       <div class="wrap">
-        <span>App screens show sample data from a made-up athlete.</span>
-        <a href="https://github.com/DangoKangoo/keel">Keel on GitHub</a>
+        <div class="links">
+          <span>App screens show sample data from a made-up athlete.</span>
+          <a href="https://github.com/DangoKangoo/keel">Keel on GitHub</a>
+        </div>
+        <svg class="signoff reveal" viewBox="14 12 297.586 76" aria-hidden="true" focusable="false"><rect x="14" y="12" width="18" height="76" rx="2" class="ink"/><rect x="35" y="40" width="16" height="10" rx="2" class="ink"/><rect x="53" y="27" width="16" height="10" rx="2" class="ink"/><rect x="71" y="14" width="16" height="10" rx="2" class="step"/><rect x="35" y="52" width="16" height="10" rx="2" class="ink" opacity="0.7"/><rect x="53" y="65" width="16" height="10" rx="2" class="ink" opacity="0.5"/><rect x="71" y="78" width="16" height="10" rx="2" class="ink" opacity="0.3"/><path transform="translate(85.469 88) scale(0.110787 -0.110787)" d="M76.54345703125 0V687.0869140625H644.15087890625V546.740234375H255.998046875V417.9560546875H594.71630859375V281.41357421875H255.998046875V140.3466796875H650.6943359375V0Z" class="ink"/><path transform="translate(165.125 88) scale(0.110787 -0.110787)" d="M76.54345703125 0V687.0869140625H644.15087890625V546.740234375H255.998046875V417.9560546875H594.71630859375V281.41357421875H255.998046875V140.3466796875H650.6943359375V0Z" class="ink"/><path transform="translate(244.781 88) scale(0.110787 -0.110787)" d="M74.9130859375 0V687.0869140625H254.36767578125V147.23779296875H603.2587890625V0Z" class="ink"/></svg>
       </div>
     </footer>
 
